@@ -1,0 +1,38 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "name": "KrakenD - API Gateway",
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "endpoints": [
+    {
+      "endpoint": "/api/v1/pub/{phone}/_otp_x",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/api/v1/pub/{phone}/_otp_x",
+          "encoding": "json",
+          "sd": "static",
+          "method": "GET",
+          "host": [
+            "rog:8081"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ],
+  "plugin": {
+    "pattern": ".so",
+    "folder": "/opt/krakend/plugins/"
+  }, 
+  "extra_config": {
+    "plugin/http-server": {
+      "name": ["krakend-plugin"],
+      "krakend-plugin": {
+        "path": "/_hijack"
+      }
+    }
+  }
+}
